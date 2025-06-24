@@ -1,4 +1,4 @@
-# Bankly
+# 1. Bankly
 
 **Version:** <!-- VERSION_PLACEHOLDER -->
 
@@ -36,7 +36,7 @@ flowchart TD
 
 Built with Node.js, TypeScript, and functional programming principles using fp-ts, Bankly supports secure money transfers between user accounts, tracks transaction history, and publishes domain events via Kafka — all wrapped with robust CI/CD pipelines and comprehensive documentation.
 
-## 📌 Summary
+## 1.1 Summary
 Bankly is a functional, event-driven banking backend built with modern TypeScript, designed to demonstrate senior software engineering capabilities — from architecture and validation to event processing and CI/CD automation.
 
 It simulates real-world financial use cases and shows expertise in building scalable, reliable, and testable back-end systems — suitable for fintech companies, startups, and enterprise APIs.
@@ -45,7 +45,7 @@ It simulates real-world financial use cases and shows expertise in building scal
 For a detailed roadmap and workflow, see [PROJECT_STRATEGY.md](./PROJECT_STRATEGY.md).
 The project follows a modular, scalable structure for maintainability and growth.
 
-## Key Features
+## 2. Key Features
 
 | Area                | Feature                                                                 |
 |---------------------|-------------------------------------------------------------------------|
@@ -61,7 +61,7 @@ The project follows a modular, scalable structure for maintainability and growth
 
 ---
 
-## 🧠 Technologies Used
+## 3. Technologies Used
 - **Language:** Node.js + TypeScript
 - **Functional Tools:** fp-ts, io-ts, zod
 - **Database:** PostgreSQL (via Prisma ORM)
@@ -73,52 +73,105 @@ The project follows a modular, scalable structure for maintainability and growth
 
 ---
 
-## 🏗️ Architecture & Design Decisions
+## 4. Architecture & Design Decisions
 
 This project is a self technical test, designed to showcase my approach to building robust, maintainable, and scalable backend systems. Below, I explain the key architectural and design decisions:
 
-### 1. **Domain-Driven Design (DDD) & Hexagonal Architecture**
+### 4.1 Domain-Driven Design (DDD) & Hexagonal Architecture
 - **Why:** DDD ensures the business logic is at the core, with clear boundaries and ubiquitous language. Hexagonal (Ports & Adapters) architecture decouples the domain from infrastructure, making the system testable and adaptable to change.
 - **How:** All business rules are implemented in the domain layer, with adapters for persistence (PostgreSQL/Prisma), messaging (Kafka), and API (GraphQL).
 
-### 2. **Functional Programming with fp-ts**
+### 4.2 Functional Programming with fp-ts
 - **Why:** Functional programming (FP) brings composability, type safety, and predictability. fp-ts and io-ts enable pure business logic, error handling with TaskEither, and runtime validation.
 - **How:** All core logic is written using fp-ts constructs, with no unsafe casting or mutation. Domain objects are immutable.
 
-### 3. **Type Safety & Validation**
+### 4.3 Type Safety & Validation
 - **Why:** Financial systems require strong guarantees. TypeScript, io-ts, and zod provide both compile-time and runtime validation.
 - **How:** All API inputs/outputs and domain events are validated at runtime, and types are enforced throughout the stack.
 
-### 4. **Event-Driven Design with Kafka**
+### 4.4 Event-Driven Design with Kafka
 - **Why:** Event streaming enables real-time integrations, auditability, and decoupling of services.
 - **How:** Money transfer operations emit `MoneyTransferred` events to Kafka, which can be consumed by external systems for logging, notifications, or analytics.
 
-### 5. **Testing & CI/CD**
+### 4.5 Testing & CI/CD
 - **Why:** Reliability and confidence in changes are critical. Automated tests and pipelines catch issues early.
 - **How:** The project includes unit tests, integration tests, and property-based tests (Fast-check). GitHub Actions run linting, tests, and build checks on every push.
 
-### 6. **Security**
+### 4.6 Security
 - **Why:** Banking systems must be secure by default.
 - **How:** All domain objects are immutable, validation is strict, and no unsafe type assertions are used. Sensitive operations are protected by design.
 
 ---
 
-## 🚀 Getting Started
+## 5. Getting Started
 
-### Dependencies
+### 5.1 Dependencies
 Run the following to install all required dependencies (already listed in package.json):
 
 ```sh
 yarn install
 ```
 
-### Project Structure
+### 5.2 Project Structure
 - Source code lives in the `src/` directory.
 - The entry point is `src/index.ts`.
 - Tests are placed in the `tests/` directory.
 - Configuration files (non-env) go in the `config/` directory.
 
-### TypeScript Build
+### 5.3 TypeScript Build
 To compile the project:
 
+```sh
+yarn tsc
 ```
+
+This will output compiled files to the `dist/` directory.
+
+---
+
+## 6. Documentation
+- Full API schema, event contracts, and architectural diagrams will be provided as the project evolves.
+
+---
+
+## 7. Contributing
+This project is a technical showcase and not open for external contributions at this time.
+
+---
+
+## 8. License
+MIT
+
+---
+
+## 9. Commit Message Standard
+
+This project uses the **Conventional Commits** standard for all commit messages. This enables automated changelogs, semantic releases, and a clear project history.
+
+**Format:**
+```
+type(scope step): subject
+```
+- `type`: chore, feat, fix, docs, refactor, test, ci, build, etc.
+- `scope`: (optional) area of codebase affected
+- `step`: (required) the step from PROJECT_STRATEGY.md (e.g., 1.4.2)
+- `subject`: short, imperative description
+
+**Examples:**
+- `feat(api 4.2): add money transfer mutation`
+- `fix(domain 2.2): correct balance calculation`
+- `chore(setup 1.4.2): add ESLint and Prettier config`
+- `docs(readme 9.1): add architecture diagram`
+
+**Rules:**
+- Reference the step being followed in PROJECT_STRATEGY.md in every commit.
+- Use lower case and imperative mood for the subject.
+- Keep messages concise and descriptive.
+
+**Why?**
+- Enables automated changelogs and semantic releases
+- Makes git history easier to read and search
+- Encourages clear, consistent communication
+- Ensures traceability to project strategy steps
+
+For more details, see [Conventional Commits](https://www.conventionalcommits.org/).
