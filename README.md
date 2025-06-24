@@ -101,6 +101,101 @@ This project is a self technical test, designed to showcase my approach to build
 - **Why:** Banking systems must be secure by default.
 - **How:** All domain objects are immutable, validation is strict, and no unsafe type assertions are used. Sensitive operations are protected by design.
 
+### 4.7 Domain Model & Core Logic
+
+#### Account
+- **id**: Unique identifier (UUID or string)
+- **ownerName**: Name of the account holder
+- **balance**: Numeric value (integer, e.g., cents)
+- **currency**: (optional, for multi-currency)
+- **createdAt**: Timestamp
+- **updatedAt**: Timestamp
+- **status**: (optional, e.g., active, frozen, closed)
+
+#### Transaction
+- **id**: Unique identifier (UUID or string)
+- **fromAccountId**: Reference to source account
+- **toAccountId**: Reference to destination account
+- **amount**: Numeric value (positive, in smallest currency unit)
+- **currency**: (optional, for multi-currency)
+- **createdAt**: Timestamp
+- **status**: (pending, completed, failed, reversed)
+- **type**: (transfer, deposit, withdrawal, etc.)
+- **reference**: (optional, for external systems or audit)
+
+#### transferFunds Logic
+- **Inputs**: fromAccount, toAccount, amount
+- **Validations**:
+  - Both accounts exist and are active
+  - Sufficient balance in fromAccount
+  - Amount is positive and non-zero
+  - (Optional) Currency matches
+- **Effects**:
+  - Debit fromAccount, credit toAccount
+  - Create a Transaction record
+  - Emit MoneyTransferred event
+- **Error Handling**: Use fp-ts `Either` or `TaskEither` for functional error management
+
+**All domain logic is pure and side-effect free. Side effects (DB, Kafka) are handled in adapters. Runtime validation is performed with io-ts or zod.**
+
+#### Entity-Relationship Diagram
+
+```mermaid
+erDiagram
+    Account {
+      string id PK
+      string ownerName
+      int balance
+      string currency
+      datetime createdAt
+      datetime updatedAt
+      string status
+    }
+    Transaction {
+      string id PK
+      string fromAccountId FK
+      string toAccountId FK
+      int amount
+      string currency
+      datetime createdAt
+      string status
+      string type
+      string reference
+    }
+    Account ||--o{ Transaction : fromAccount
+    Account ||--o{ Transaction : toAccount
+```
+
+#### Prisma Schema (see prisma/schema.prisma)
+
+```prisma
+model Account {
+  id         String        @id @default(uuid())
+  ownerName  String
+  balance    Int
+  currency   String?
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  status     String?
+  sentTransactions     Transaction[] @relation("FromAccount")
+  receivedTransactions Transaction[] @relation("ToAccount")
+}
+
+model Transaction {
+  id            String   @id @default(uuid())
+  fromAccount   Account  @relation("FromAccount", fields: [fromAccountId], references: [id])
+  fromAccountId String
+  toAccount     Account  @relation("ToAccount", fields: [toAccountId], references: [id])
+  toAccountId   String
+  amount        Int
+  currency      String?
+  createdAt     DateTime @default(now())
+  status        String
+  type          String
+  reference     String?
+}
+```
+
 ---
 
 ## 5. Getting Started

@@ -93,7 +93,10 @@ Initialize and develop a production-grade, functional banking backend with best 
    - [ ] 2.3 Add runtime validation (io-ts or zod)
 
 3. 🔵 **Database (PostgreSQL + Prisma)**
-   - [ ] 3.1 Define Prisma schema for accounts and transactions
+   - [ ] 3.1 Define Prisma schema for accounts and transactions:
+     - [ ] 3.1.1 Update `prisma/schema.prisma` with Account and Transaction models
+     - [ ] 3.1.2 Add schema code block to README for reference
+     - [ ] 3.1.3 Document ER diagram in README
    - [ ] 3.2 Setup and run Prisma migrations
    - [ ] 3.3 Create persistence adapters with transaction-safe updates
 
@@ -150,7 +153,7 @@ Initialize and develop a production-grade, functional banking backend with best 
 
 ## AWP - Agentic Workflow Procedures
 
-- **update docs**: Review README.md and PROJECT_STRATEGY.md after each step. For README.md check if it needs update entirely or document new feature. For PROJECT_STRATEGY.md make sure everything is aligned with the context and steps checkboxes match the progress. Update as needed to reflect the current state and next actions. If you have offered any changes and user accepted, update the relevant section in PROJECT_STRATEGY.md to reflect this.
+- **update**: Review README.md and PROJECT_STRATEGY.md after each step. For README.md check if it needs update entirely or document new feature. For PROJECT_STRATEGY.md make sure everything is aligned with the context and steps checkboxes match the progress. Update as needed to reflect the current state and next actions. If you have offered any changes and user accepted, update the relevant section in PROJECT_STRATEGY.md to reflect this.
 - **commit**: Use the Conventional Commits standard we agreed for messages in README.md, Reference the step corresponding in PROJECT_STRATEGY.md in every commit. Then commit and push changes to the repository. Review files you added to make sure commit message is accurate.
 - **next**: Check if the AWC:update doc and AWC:commit is completed, if yes proceed to next main step. Don't forget that you can evaluate steps and propose. Also if you see any critical points please mention it before continue. If User accept your proposition, update docs accordingly.
 
