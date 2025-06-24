@@ -94,11 +94,11 @@ steps:
         done: true
   - number: 3
     name: "Database (PostgreSQL + Prisma)"
-    done: false
+    done: true
     steps:
       - number: 3.1
         description: "Define Prisma schema for accounts and transactions:"
-        done: false
+        done: true
         steps:
           - number: 3.1.1
             description: "Update prisma/schema.prisma with Account and Transaction models"
@@ -111,10 +111,10 @@ steps:
             done: true
       - number: 3.2
         description: "Setup and run Prisma migrations"
-        done: false
+        done: true
       - number: 3.3
         description: "Create persistence adapters with transaction-safe updates"
-        done: false
+        done: true
   - number: 4
     name: "GraphQL API"
     done: false

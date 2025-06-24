@@ -199,6 +199,11 @@ model Transaction {
 }
 ```
 
+### 4.8 Persistence Adapters
+- **Why:** To ensure all database updates (such as money transfers) are atomic, ACID-compliant, and separated from business logic.
+- **How:** All persistence operations are performed through adapters using Prisma transactions. This keeps the domain logic pure and side-effect free.
+- **Where:** See `src/adapters/accountPersistence.ts` for the implementation of transaction-safe fund transfers.
+
 ---
 
 ## 5. Getting Started
