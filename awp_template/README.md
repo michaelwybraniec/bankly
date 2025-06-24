@@ -1,4 +1,4 @@
-# 🚀 Agentic Workflow Policy (AWP)
+# 🚀 Agentic Workflow Protocol (AWP)
 
 **Open Source Standard Candidate**
 
@@ -13,7 +13,7 @@
 3. Track your progress and let AWP hold YOU and LLM while vibe coding!
 
 ## 📚 Table of Contents
-- [🚀 Agentic Workflow Policy (AWP)](#-agentic-workflow-policy-awp)
+- [🚀 Agentic Workflow Protocol (AWP)](#-agentic-workflow-protocol-awp)
   - [📚 Table of Contents](#-table-of-contents)
   - [🌟 What is AWP?](#-what-is-awp)
   - [🏷️ Key Terms](#️-key-terms)
@@ -21,12 +21,10 @@
   - [🧠 Handling Memory Loss or Returning to Work (Diagram)](#-handling-memory-loss-or-returning-to-work-diagram)
   - [🗂️ AWP File Structure Explained](#️-awp-file-structure-explained)
   - [🛠️ How to Use AWP in Your Project](#️-how-to-use-awp-in-your-project)
-  - [💡 Best Practices](#-best-practices)
-  - [📦 Example Templates](#-example-templates)
 
 ## 🌟 What is AWP?
 
-**Agentic Workflow Policy (AWP)** is a candidate for the new standard in transparent, agentic, and collaborative project management. Use this documentation and the templates to get started, and help shape the future of hybrid human-agent vibe-coding! AWP is designed for both solo developers and teams (including AI agents), ensuring everyone stays in sync, code and docs are always aligned, and progress is transparent.
+**Agentic Workflow Protocol (AWP)** is a candidate for the new standard in transparent, agentic, and collaborative project management. Use this documentation and the templates to get started, and help shape the future of hybrid human-agent vibe-coding! AWP is designed for both solo developers and teams (including AI agents), ensuring everyone stays in sync, code and docs are always aligned, and progress is transparent.
 
 ---
 
@@ -125,36 +123,4 @@ steps:
 1. **Copy a template** (or start from scratch) and place it in your project root as `awp.yml`.
 2. **Edit the header**: Add your name, organization, and contact info.
 3. **Define your goal and outcome**: Clearly state what your project aims to achieve.
-4. **List your main steps** in the `overview` and break them down in the `steps` section. Use hierarchical numbering (1., 1.1, 2.1, etc.).
-5. **Track progress**: Mark steps as done as you complete them.
-6. **Follow the commitStandard**: Every commit should reference the relevant step and follow the agreed format.
-7. **Use the procedures**: After each step, run `awp:update`, `awp:commit`, and `awp:next` to keep everything in sync.
-8. **Collaborate**: Share your AWP file with teammates or agents. Everyone can see what's done, what's next, and how to contribute.
-9. **Iterate**: Update your AWP as your project evolves. It's your living workflow document.
-
-> 💡 **Tip:**  
-> Always keep your AWP file up to date—especially after agentic work or long coding sessions. This ensures you (and your LLM) never lose context or progress!
-
----
-
-## 💡 Best Practices
-
-- Keep your `awp.yml` file in the project root for easy discovery.
-- Use clear, actionable descriptions for each step.
-- Update your AWP after every meaningful change.
-- Reference the step number in every commit for traceability.
-- Review and refine your workflow regularly—AWP is meant to evolve with your project.
-
----
-
-## 📦 Example Templates
-
-- **`awp1.yml`**: Node.js CLI Tool
-- **`awp2.yml`**: Flask REST API
-- **`awp3.yml`**: React Web App
-- **`awp4.yml`**: Data Science Notebook
-- **`awp5.yml`**: DevOps Automation (GitHub Actions)
-
----
-
-**AWP is a candidate for the new standard in transparent, agentic, and collaborative project management. Use this documentation and the templates to get started, and help shape the future of hybrid human-agent vibe-coding!**
+4. **List your main steps** in the `overview` and break them down in the `

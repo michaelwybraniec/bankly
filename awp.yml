@@ -1,4 +1,4 @@
-# Agentic Workflow Policy for Bankly
+# Agentic Workflow Protocol for Bankly
 # Michael Wybraniec, ONE-FRONT 2025
 # This file defines the machine- and human-readable workflow for the project.
 # It ensures all steps, documentation, and code remain in sync, and enables both agents and humans to track, automate, and maintain project quality.
@@ -268,9 +268,10 @@ procedures:
     description: |
       Review awp.yml to determine the current actionable step.
       - Find the first step (or sub-step) that is not marked as done. 
-      - done is true or false.
+      - done is either true or false.
       - Marked as done means that the step is completed and the documentation is updated.
       - If the step is not marked as done, report the step number, description, and any relevant context.
+      - If you see any critical points please mention it before continue.
       - Use this as your starting point for the next work session or after a break.
 
 notes:

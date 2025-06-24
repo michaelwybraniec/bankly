@@ -1,7 +1,7 @@
 # 1. Bankly
 
 > **AWP-Driven Project**  
-> This project uses [Agentic Workflow Policy](./awp.yml) as its single source of truth for all workflow, strategy, and progress tracking. The legacy PROJECT_STRATEGY.md has been fully replaced by the Agentic Workflow Policy. This is a candidate for a new standard for collaborative, agentic, and transparent project management—machine- and human-readable, always in sync with code and docs.
+> This project uses [Agentic Workflow Protocol](./awp.yml) as its single source of truth for all workflow, strategy, and progress tracking. The legacy PROJECT_STRATEGY.md has been fully replaced by the Agentic Workflow Protocol. This is a candidate for a new standard for collaborative, agentic, and transparent project management—machine- and human-readable, always in sync with code and docs.
 
 **Version:** <!-- VERSION_PLACEHOLDER -->
 
