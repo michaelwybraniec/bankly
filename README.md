@@ -103,6 +103,13 @@ This project is a self technical test, designed to showcase my approach to build
 
 ## 🚀 Getting Started
 
+### Dependencies
+Run the following to install all required dependencies (already listed in package.json):
+
+```sh
+yarn install
+```
+
 _Coming soon: setup instructions, environment variables, and local development guide._
 
 ---

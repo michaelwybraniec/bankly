@@ -4,5 +4,26 @@
   "main": "index.js",
   "repository": "https://github.com/michaelwybraniec/bankly.git",
   "author": "Michael Wybraniec <michaelwybraniec@me.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@apollo/server": "^4.12.2",
+    "dotenv": "^16.5.0",
+    "fp-ts": "^2.16.10",
+    "graphql": "^16.11.0",
+    "graphql-scalars": "^1.24.2",
+    "io-ts": "^2.2.22",
+    "kafkajs": "^2.2.4",
+    "pg": "^8.16.2",
+    "prisma": "^6.10.1",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "eslint": "^9.29.0",
+    "jest": "^30.0.2",
+    "prettier": "^3.6.0",
+    "ts-jest": "^29.4.0",
+    "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.16",
+    "typescript": "^5.8.3"
+  }
 }
