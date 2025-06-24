@@ -233,15 +233,35 @@ procedures:
   - key: update
     number: 1
     name: "update"
-    description: "Review README.md and awp.yml after each step. See git status and check what changes were made to the files. For README.md check if it needs update entirely or document new feature. For awp.yml make sure everything is aligned with the context and steps checkboxes match the progress. Update as needed to reflect the current state and next actions. If you have offered any changes and user accepted, update the relevant section in awp.yml to reflect this."
+    description: |
+      Review README.md and awp.yml after each step:
+      - Run `git status` to see what files have changed.
+      - For README.md: Check if it needs a full update or if new features need to be documented.
+      - For awp.yml: Ensure all steps, checkboxes, and context match the actual project progress.
+      - Update both files as needed to reflect the current state and next actions.
+      - If you made changes and the user accepted them, update the relevant section in awp.yml to reflect this.
+      - The goal is to keep documentation and workflow tracking always in sync with the codebase.
   - key: commit
     number: 2
     name: "commit"
-    description: "Check git status, and use the Use the commitStandard we agreed for messages in awp.yml. Reference the step corresponding steps status in awp.yml in every commit. Then commit and push changes to the repository. Review files you added to make sure commit message is accurate."
+    description: |
+      Commit your changes for each each step:
+      - Run `git status` to review what files have changed and are staged for commit.
+      - Use the Commits standard in awp.yml commitStandard for your commit message.
+      - Reference the relevant step in awp.yml in every commit message.
+      - Review the files you added or changed to make sure the commit message is accurate and descriptive.
+      - The goal is to keep your git history clear, traceable, and aligned with your project workflow.
+      - Commit and push your changes to the repository.
   - key: next
     number: 3
     name: "next"
-    description: "Check if the AWC:update doc and AWC:commit is completed, if yes proceed to next main step. Don't forget that you can evaluate steps and propose. Also if you see any critical points please mention it before continue. If User accept your proposition, update docs accordingly."
+    description: |
+      Move to the next step in your workflow:
+      - Ensure you have completed both the awp:update and awp:commit procedures for the current step.
+      - Review your progress and check for any blockers or critical points before proceeding.
+      - If there are blockers, document them and address as needed before moving on.
+      - Once ready, identify the next actionable step in awp.yml and begin work on it.
+      - The goal is to keep your workflow continuous, transparent, and always aligned with your project roadmap.
   - key: check
     number: 4
     name: "check"
