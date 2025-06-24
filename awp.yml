@@ -36,6 +36,7 @@ overview:
   - "8. Testing"
   - "9. Documentation"
   - "10. Optional Enhancements"
+  - "11. Project Tooling & Docs"
   
 outcome: |
   A fully-tested, documented, event-driven banking backend, showcasing senior-level skills in architecture, functional programming, CI/CD, and clean API design.
@@ -164,45 +165,45 @@ steps:
     steps:
       - number: 6.1
         description: "Build a separate Kafka consumer"
-        done: false
+        done: true
       - number: 6.2
         description: "Log or process incoming events"
-        done: false
+        done: true
       - number: 6.3
         description: "Demonstrate microservice readiness"
-        done: false
+        done: true
   - number: 7
     name: "CI/CD Pipeline"
     done: false
     steps:
       - number: 7.1
         description: "Configure GitHub Actions workflow"
-        done: false
+        done: true
       - number: 7.2
         description: "Add steps: install, lint, test, build"
-        done: false
+        done: true
       - number: 7.3
         description: "Auto-run on push & PR"
-        done: false
+        done: true
       - number: 7.4
         description: "(Optional) Add release automation (e.g., version update script, semantic release)"
-        done: false
+        done: true
       - number: 7.5
         description: "Add Dockerfile and .dockerignore for containerization"
-        done: false
+        done: true
   - number: 8
     name: "Testing"
     done: false
     steps:
       - number: 8.1
         description: "Write unit tests for domain logic"
-        done: false
+        done: true
       - number: 8.2
         description: "Write integration tests for GraphQL + DB + Kafka"
-        done: false
+        done: true
       - number: 8.3
         description: "Use mocks and property-based tests (fast-check)"
-        done: false
+        done: true
   - number: 9
     name: "Documentation"
     done: false
@@ -245,6 +246,22 @@ steps:
       - number: 10.4
         description: "Add REST bridge (optional)"
         done: false
+      - number: 10.5
+        description: "Add dashboards and alerting (Prometheus, Grafana, Slack, email)"
+        done: false
+  - number: 11
+    name: "Project Tooling & Docs"
+    done: false
+    steps:
+      - number: 11.1
+        description: "Create /docs/ directory with architecture, API, CI/CD, metrics, and AWP protocol docs"
+        done: true
+      - number: 11.2
+        description: "Add Makefile for common dev tasks"
+        done: true
+      - number: 11.3
+        description: "Add CONTRIBUTING.md for onboarding and workflow"
+        done: true
 
 procedures:
   - key: update
@@ -295,6 +312,9 @@ notes:
   - "Follow aws:commitStandard for all commit messages."
   - "Update this file as the project progresses."
   - "Check off each item as you complete it."
+  - "See README for Audit Logger consumer documentation (step 6.1)."
+  - "Audit events are persisted to the database and health check is available on /health (step 6.2/6.3)."
+  - "See README for onboarding, metrics, dashboards, and CI/CD (steps 7, 8.2, 10.5, 11)."
 
 commitStandard:
   format: |
