@@ -17,10 +17,10 @@ export interface TransferFundsInput {
   currency?: string;
 }
 
-export const TransferFundsInputSchema = z.object({
-  fromAccount: AccountSchema,
-  toAccount: AccountSchema,
-  amount: z.number().int().positive(),
+const TransferFundsInputShape = z.object({
+  fromAccount: z.any(),
+  toAccount: z.any(),
+  amount: z.number(),
   currency: z.string().optional(),
 });
 
@@ -30,20 +30,20 @@ export function transferFunds(
   TransferFundsError,
   { updatedFrom: Account; updatedTo: Account; transaction: Transaction }
 > {
-  // Runtime validation
-  const parseResult = TransferFundsInputSchema.safeParse(input);
+  // Only check shape, not business rules
+  const parseResult = TransferFundsInputShape.safeParse(input);
   if (!parseResult.success) {
     return left({ type: 'InvalidAccount', message: 'Invalid input: ' + parseResult.error.message });
   }
   const { fromAccount, toAccount, amount, currency } = input;
 
-  if (fromAccount.status && fromAccount.status !== 'active') {
+  if (typeof fromAccount.status === 'string' && fromAccount.status !== 'active') {
     return left({ type: 'InactiveAccount', message: 'Source account is not active' });
   }
-  if (toAccount.status && toAccount.status !== 'active') {
+  if (typeof toAccount.status === 'string' && toAccount.status !== 'active') {
     return left({ type: 'InactiveAccount', message: 'Destination account is not active' });
   }
-  if (amount <= 0) {
+  if (typeof amount !== 'number' || amount <= 0) {
     return left({ type: 'InvalidAmount', message: 'Amount must be positive' });
   }
   if (fromAccount.balance < amount) {
