@@ -1,0 +1,8 @@
+{
+  "name": "bankly",
+  "version": "0.1.0",
+  "main": "index.js",
+  "repository": "https://github.com/michaelwybraniec/bankly.git",
+  "author": "Michael Wybraniec <michaelwybraniec@me.com>",
+  "license": "MIT"
+}
