@@ -510,3 +510,192 @@ flowchart TD
 This diagram shows how users interact with the API, how the API reads/writes to the database, emits events to Kafka, and how consumers process those events for further use (e.g., audit logging).
 
 ---
+
+## 📝 Audit Logger Kafka Consumer (AWP Step 6.1–6.3)
+
+This service consumes `money-transferred` events from Kafka and logs them for audit purposes. It is designed to be production-ready, with validation, structured logging, database persistence, and a health check endpoint.
+
+### 📦 Features
+- Consumes events from Kafka (`money-transferred` topic)
+- Validates event structure (using zod)
+- Logs events to `audit.log` (file) and console (using winston)
+- **Persists audit events to the database** (PostgreSQL, Prisma)
+- Health check endpoint at `/health` (port 4001)
+- Graceful shutdown on SIGINT/SIGTERM
+- Configurable via environment variables
+
+### ⚙️ Configuration
+Copy `.env.example` to `.env` and set the following:
+```
+KAFKA_BROKER=localhost:9092
+KAFKA_TOPIC=money-transferred
+KAFKA_GROUP_ID=audit-logger-group
+```
+
+### 🚀 Running the Consumer
+```
+npx ts-node scripts/start-consumer.ts
+```
+
+### 🧪 Testing
+1. Start the main app and the audit logger consumer.
+2. Trigger a money transfer in the main app.
+3. Check the console, `audit.log`, and the `AuditEvent` table in the database for the event.
+
+### 📂 Log File
+- All audit events are appended to `audit.log` in the project root.
+- To rotate or persist logs elsewhere, adjust `src/audit-consumer/auditLogger.ts`.
+
+### 🗄️ Database Persistence
+- Events are stored in the `AuditEvent` table (see `prisma/schema.prisma`).
+- To query audit events, use Prisma or direct SQL.
+
+### 🩺 Health Check
+- The consumer exposes a health check endpoint at `http://localhost:4001/health`.
+- Returns `{ "status": "ok" }` if running.
+
+### 🛠️ Extending
+- For metrics or advanced health checks, extend `src/audit-consumer/health.ts`.
+
+---
+
+## 🧪 Automated End-to-End Testing (AWP Step 8.2)
+
+A production-ready script (`scripts/test-audit-logger-e2e.ts`) verifies the full event flow, DB persistence, and health check for the Audit Logger microservice. This test is CI/CD-friendly and aligns with AWP step 8.2 (integration tests for GraphQL + DB + Kafka).
+
+### How it works
+- Sends a test event to Kafka
+- Waits and retries for event propagation
+- Checks the health endpoint
+- Verifies the event in the `AuditEvent` table
+- Checks `audit.log` for the event
+- Optionally cleans up test data
+- Exits 0 on success, 1 on failure (for CI)
+
+### Usage
+```sh
+npx ts-node scripts/test-audit-logger-e2e.ts
+```
+
+### Configuration (via `.env` or CI env)
+- `KAFKA_BROKER`, `KAFKA_TOPIC`, `DATABASE_URL` (required)
+- `TEST_WAIT_TIME` (ms, default 3000)
+- `TEST_RETRIES` (default 5)
+- `TEST_CLEANUP` (`true` to delete test event from DB)
+- `HEALTH_URL` (default `http://localhost:4001/health`)
+- `TEST_FROM_ACCOUNT`, `TEST_TO_ACCOUNT`, `TEST_AMOUNT` (optional test event values)
+
+### Example for CI/CD
+Add as a step in your pipeline. The build will fail if the audit logger is not working end-to-end.
+
+### AWP Alignment
+- **Step 8.2:** This script fulfills the requirement for integration tests covering event-driven flows.
+- **Traceability:** Test events are clearly marked and can be cleaned up automatically.
+- **Documentation:** This section and the script are referenced in your AWP workflow and README.
+
+---
+
+## 🚀 Audit Logger Microservice: Production-Ready Features
+
+- **Dockerfile**: Provided for containerized deployment (see `src/audit-consumer/Dockerfile`).
+- **Prometheus metrics**: Exposed at `/metrics` on port 4002 (event and error counters).
+- **Health check**: `/health` on port 4001.
+- **CI/CD**: Automated via GitHub Actions (`.github/workflows/ci.yml`).
+- **Automated e2e test**: See [Automated End-to-End Testing (AWP Step 8.2)](#-automated-end-to-end-testing-awp-step-82).
+- **AWP alignment**: Steps 6, 7, and 8.2 are fully covered.
+
+### Metrics Example
+- `audit_events_total`: Number of audit events processed
+- `audit_errors_total`: Number of errors encountered
+
+### Docker Usage
+```sh
+docker build -t audit-logger ./src/audit-consumer
+# Set env vars for Kafka, DB, etc.
+docker run -p 4001:4001 -p 4002:4002 --env-file .env audit-logger
+```
+
+### CI/CD
+- On every push/PR, the workflow lints, type-checks, tests, runs the e2e test, and builds the project.
+- Fails the build if any check fails.
+
+---
+
+## 🧑‍💻 Onboarding Guide
+
+1. Clone the repo and install dependencies (`npm install`)
+2. Copy `.env.example` to `.env` and configure Kafka, DB, etc.
+3. Start PostgreSQL and Kafka (see Docker Compose in `awp.yml`)
+4. Run the main app and the audit logger consumer (`npx ts-node scripts/start-consumer.ts`)
+5. Use the e2e test script to verify everything works
+6. For metrics, visit `http://localhost:4002/metrics`
+7. For health, visit `http://localhost:4001/health`
+
+---
+
+## 🗺️ Architecture Diagram
+
+```mermaid
+flowchart TD
+    User["User/API Client"] -->|GraphQL| API["Main App (GraphQL API)"]
+    API -->|DB| DB[(PostgreSQL)]
+    API -->|Kafka Event| Kafka[(Kafka)]
+    Kafka -->|money-transferred| AuditLogger["Audit Logger (Consumer)"]
+    AuditLogger -->|/health| Health["Health Endpoint (4001)"]
+    AuditLogger -->|/metrics| Metrics["Prometheus Metrics (4002)"]
+    AuditLogger -->|DB| AuditDB[(PostgreSQL: AuditEvent)]
+    AuditLogger -->|File| LogFile["audit.log"]
+```
+
+---
+
+## 📈 Dashboards & Alerting (Next Steps)
+- Integrate with Prometheus/Grafana for dashboards
+- Add Slack/email/webhook alerting for failures (see AWP optional enhancements)
+
+---
+
+## 🔖 Release Automation (AWP Step 7.4)
+
+This project uses [semantic-release](https://semantic-release.gitbook.io/) for automated versioning, changelogs, and GitHub releases.
+
+- Releases are triggered on every push to `main` with a Conventional Commit message.
+- Changelog is generated and published automatically.
+- See `.releaserc.json` for configuration.
+
+To run locally (dry run):
+```sh
+npx semantic-release --dry-run
+```
+
+## Automated Release Management
+
+This project uses **semantic-release** for fully automated, production-grade release management:
+
+- **Versioning**: Follows semantic versioning, automatically bumps version based on commit messages.
+- **Changelog**: Updates `CHANGELOG.md` with each release.
+- **GitHub Releases**: Publishes release notes and tags to GitHub.
+- **No manual version bumps or changelog edits required.**
+
+### How it works
+- On every merge to `main`, the CI pipeline runs `npm run release` (or `yarn release`).
+- If there are new commits since the last release, a new version is published, changelog is updated, and a GitHub release is created.
+- No NPM publish is performed (this is a backend service).
+
+### Local Release (for testing)
+```sh
+npm run release
+# or
+yarn release
+```
+
+### Commit Message Format
+Semantic-release uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/):
+- Example: `feat(api 4.2): add money transfer mutation`
+- See `awp.yml` for commit standards.
+
+### CI/CD Integration
+- The release step is included in the GitHub Actions workflow for `main` branch.
+- Ensure your repo has a `GH_TOKEN` secret for GitHub releases.
+
+---
