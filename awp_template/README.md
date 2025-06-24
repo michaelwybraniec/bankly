@@ -6,11 +6,7 @@
 
 **Mission:** Empower teams and agents to build, track, and document projects with clarity, transparency, and flow.
 
-**Quickstart:**
-1. Copy a template from below to your project as `awp.yml`.
-   
-2. Edit the header, goal, and steps for your project.
-3. Track your progress and let AWP hold YOU and LLM while vibe coding!
+---
 
 ## 📚 Table of Contents
 - [🚀 Agentic Workflow Protocol (AWP)](#-agentic-workflow-protocol-awp)
@@ -21,10 +17,14 @@
   - [🧠 Handling Memory Loss or Returning to Work (Diagram)](#-handling-memory-loss-or-returning-to-work-diagram)
   - [🗂️ AWP File Structure Explained](#️-awp-file-structure-explained)
   - [🛠️ How to Use AWP in Your Project](#️-how-to-use-awp-in-your-project)
+  - [📋 Best Practices](#-best-practices)
+  - [📝 Example AWP YAML](#-example-awp-yaml)
+
+---
 
 ## 🌟 What is AWP?
 
-**Agentic Workflow Protocol (AWP)** is a candidate for the new standard in transparent, agentic, and collaborative project management. Use this documentation and the templates to get started, and help shape the future of hybrid human-agent vibe-coding! AWP is designed for both solo developers and teams (including AI agents), ensuring everyone stays in sync, code and docs are always aligned, and progress is transparent.
+**Agentic Workflow Protocol (AWP)** is a transparent, agentic, and collaborative project management standard. It is designed for both solo developers and teams (including AI agents), ensuring everyone stays in sync, code and docs are always aligned, and progress is transparent. AWP is both human- and machine-readable, making it ideal for hybrid human/AI workflows.
 
 ---
 
@@ -37,7 +37,7 @@
 > This is when you let your agent work for you too much, and then it forgets the context due to network or LLM limitations. It can lead to overlooking the context, and/or losing track of the project's progress, architecture, or complexity.
 
 **AWP**
-> AWP is designed to prevent over-vibing by making project strategy, progress, actions, and procedures always visible and reviewable for humans.
+> AWP is designed to prevent over-vibing by making project strategy, progress, actions, and procedures always visible and reviewable for humans and agents.
 
 ---
 
@@ -90,31 +90,29 @@ flowchart TD
 
 > **The `awp.yml` file is your project's living roadmap.**
 
-| Section         | Purpose                                                      |
-|-----------------|-------------------------------------------------------------|
-| **Header/Metadata** | Human context, author, contact info                    |
-| **author**          | Main author/maintainer                                 |
-| **goal**            | Project's main objective                               |
-| **overview**        | High-level project phases                              |
-| **outcome**         | Intended final result                                  |
-| **steps**           | Hierarchical, numerated checklist of all steps         |
-| **procedures**      | Core workflow actions (update, commit, next)           |
-| **notes**           | Reminders and project-wide policies                    |
-| **commitStandard**  | Commit message format, rules, and examples             |
+| Section           | Purpose                                                      |
+|-------------------|-------------------------------------------------------------|
+| **init**          | Onboarding instructions for humans/agents                   |
+| **author**        | Main author/maintainer                                      |
+| **goal**          | Project's main objective                                    |
+| **overview**      | High-level project phases                                   |
+| **outcome**       | Intended final result                                       |
+| **steps**         | Hierarchical, numerated checklist of all steps              |
+| **procedures**    | Core workflow actions (update, commit, next, check, etc.)   |
+| **notes**         | Reminders and project-wide policies                         |
+| **commitStandard**| Commit message format, rules, and examples                  |
+| **version/services** | (Optional) Infra or compose config for dev/test           |
 
-**Example snippet:**
-```yaml
-steps:
-  - number: 1
-    name: "Setup & Tooling"
-    steps:
-      - number: 1.1
-        description: "Initialize project with yarn init -y"
-        done: true
-      - number: 1.2
-        description: "Add .gitignore and README.md"
-        done: true
-```
+**Section Details:**
+- **init**: Step-by-step onboarding for new contributors or agents.
+- **goal**: The north star for the project.
+- **overview**: A list of the main phases or milestones.
+- **outcome**: What success looks like.
+- **steps**: A tree of all actionable steps, each with a number, name, description, and done status. Steps can be nested.
+- **procedures**: Canonical definitions for `update`, `commit`, `next`, and `check` actions. These ensure everyone (and every agent) follows the same workflow for updating docs, committing, and progressing.
+- **notes**: Project-wide reminders, policies, or tips.
+- **commitStandard**: The required format for all commit messages, with types, rules, and examples.
+- **version/services**: (Optional) Compose or infra config for local dev/test.
 
 ---
 
@@ -122,5 +120,92 @@ steps:
 
 1. **Copy a template** (or start from scratch) and place it in your project root as `awp.yml`.
 2. **Edit the header**: Add your name, organization, and contact info.
-3. **Define your goal and outcome**: Clearly state what your project aims to achieve.
-4. **List your main steps** in the `overview` and break them down in the `
+3. **Define your goal and outcome**: Clearly state what your project aims to achieve and what success looks like.
+4. **List your main steps** in the `overview` and break them down in the `steps` section. Use nested steps for complex projects.
+5. **Follow the procedures**:
+   - **update**: After each step, review and update both `README.md` and `awp.yml` to reflect the current state and next actions. Mark steps as done.
+   - **commit**: Commit your changes using the commit standard, referencing the relevant step.
+   - **next**: Move to the next actionable step only after update and commit are complete. Check for blockers before proceeding.
+   - **check**: Use this to find the next actionable step (first not done) and restore context after a break.
+6. **Keep everything in sync**: The goal is to keep documentation, workflow, and codebase always aligned.
+
+---
+
+## 📋 Best Practices
+
+- Always update both `awp.yml` and `README.md` after each step.
+- Use the `procedures` section as your canonical workflow for update, commit, next, and check.
+- Reference the step number in every commit message.
+- Use the `commitStandard` for all commits to enable automation and traceability.
+- If you see blockers, critical points, or have suggestions, document and address them before moving on.
+- Use the `init` section to onboard new contributors or agents.
+- Review the `notes` section for project-wide policies.
+- If your project uses local infra (e.g., Docker Compose), document it in the `version/services` section.
+
+---
+
+## 📝 Example AWP YAML
+
+```yaml
+# Agentic Workflow Protocol for Project X
+init: |
+  - Read awp.yml and README.md to understand the workflow.
+  - Follow the procedures for update, commit, next, and check.
+  - Keep everything in sync.
+author: Jane Dev
+goal: |
+  Build a simple CLI tool in Node.js that prints a greeting.
+overview:
+  - "1. Setup"
+  - "2. Implement CLI logic"
+  - "3. Test & Document"
+outcome: |
+  A working CLI tool that prints a greeting, with tests and documentation.
+steps:
+  - number: 1
+    name: "Setup"
+    steps:
+      - number: 1.1
+        description: "Initialize project with npm init -y"
+        done: true
+      - number: 1.2
+        description: "Add index.js and package.json scripts"
+        done: true
+  - number: 2
+    name: "Implement CLI logic"
+    steps:
+      - number: 2.1
+        description: "Write greeting logic in index.js"
+        done: false
+procedures:
+  - key: update
+    number: 1
+    name: "update"
+    description: |
+      Review README.md and awp.yml after each step. Update as needed to reflect the current state and next actions.
+  - key: commit
+    number: 2
+    name: "commit"
+    description: |
+      Use the commitStandard for all commit messages. Reference the step in every commit.
+  - key: next
+    number: 3
+    name: "next"
+    description: |
+      After update and commit, proceed to the next main step.
+notes:
+  - "Reference the step in every commit."
+commitStandard:
+  format: "type(scope step): subject"
+  types: [feat, fix, docs, test, chore]
+  rules:
+    - Reference the step in every commit.
+    - Use imperative mood.
+  examples:
+    - "feat(cli 2.1): add greeting logic"
+    - "docs(readme 3.2): add usage instructions"
+```
+
+---
+
+**AWP is a living protocol. Help improve it by contributing feedback, templates, and best practices!**

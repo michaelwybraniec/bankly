@@ -3,7 +3,24 @@
 # This file defines the machine- and human-readable workflow for the project.
 # It ensures all steps, documentation, and code remain in sync, and enables both agents and humans to track, automate, and maintain project quality.
 
-author: Michael Wybraniec
+author: Michael Wybraniec (ONE-FRONT.COM)
+
+init: |
+  This is the instructions you should follow every time you work with AWP:
+  - read the file awp.yml to understand the project strategy.
+  - read the README.md to understand the project and the workflow.
+  - read the commitStandard to understand the commit messages.
+  - read the procedures to understand the commands I will ask you to execute.
+  - read the notes to understand the workflow.
+  - read the steps to understand the project strategy.
+  - read the outcome to understand the project outcome.
+  - read the version to understand the version of the workflow.
+  - if you see any critical points please mention it before continue.
+  - if you see any blockers please mention it before continue.
+  - if you see any questions please ask me before continue.
+  - if you see any suggestions please ask me before continue.
+  - if you see any improvements please ask me before continue.
+  - if you see any feedback please ask me before continue.
 
 goal: |
   Initialize and develop a production-grade, functional banking backend with best practices, automation, and clear documentation.
