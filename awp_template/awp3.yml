@@ -1,0 +1,78 @@
+# Agentic Workflow Policy Example
+# Michael Wybraniec, ONE-FRONT 2025
+# Contact: michaelwybraniec@me.com
+# This file defines the machine- and human-readable workflow for the project.
+# It ensures all steps, documentation, and code remain in sync, and enables both agents and humans to track, automate, and maintain project quality.
+
+# AWP for React Web App
+# Example: Frontend SPA
+
+author: Casey UI
+
+goal: |
+  Build a single-page React app for tracking habits.
+
+overview:
+  - "1. Project Setup"
+  - "2. UI Components"
+  - "3. State Management"
+  - "4. API Integration"
+  - "5. Testing & Docs"
+
+steps:
+  - number: 1
+    name: "Project Setup"
+    steps:
+      - number: 1.1
+        description: "Create app with create-react-app"
+      - number: 1.2
+        description: "Setup ESLint and Prettier"
+  - number: 2
+    name: "UI Components"
+    steps:
+      - number: 2.1
+        description: "Build HabitList and HabitItem components"
+  - number: 3
+    name: "State Management"
+    steps:
+      - number: 3.1
+        description: "Add Redux for state management"
+  - number: 4
+    name: "API Integration"
+    steps:
+      - number: 4.1
+        description: "Connect to backend API for habits"
+  - number: 5
+    name: "Testing & Docs"
+    steps:
+      - number: 5.1
+        description: "Write unit tests for components"
+      - number: 5.2
+        description: "Document usage in README.md"
+
+outcome: |
+  A React SPA for habit tracking, with state management, API integration, tests, and docs.
+
+commitStandard:
+  format: "type(scope step): subject"
+  types: [feat, fix, docs, test, chore]
+  rules:
+    - Reference the step in every commit.
+    - Use imperative mood.
+  examples:
+    - "feat(ui 2.1): add HabitList component"
+    - "test(ui 5.1): add tests for HabitItem"
+
+procedures:
+  - key: update
+    number: 1
+    name: "update"
+    description: "Review README.md and awp.yml after each step. Update as needed to reflect the current state and next actions."
+  - key: commit
+    number: 2
+    name: "commit"
+    description: "Use the commitStandard for all commit messages. Reference the step in every commit."
+  - key: next
+    number: 3
+    name: "next"
+    description: "After update and commit, proceed to the next main step." 

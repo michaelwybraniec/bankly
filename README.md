@@ -1,5 +1,8 @@
 # 1. Bankly
 
+> **AWP-Driven Project**  
+> This project uses [Agentic Workflow Policy](./awp.yml) as its single source of truth for all workflow, strategy, and progress tracking. The legacy PROJECT_STRATEGY.md has been fully replaced by the Agentic Workflow Policy. This is a candidate for a new standard for collaborative, agentic, and transparent project management—machine- and human-readable, always in sync with code and docs.
+
 **Version:** <!-- VERSION_PLACEHOLDER -->
 
 Bankly is a self tech testing project, scaled up by strategic acceleration using a configured environment of multiple agents and MCP. The security layer ensures that using agents or MCP is not a security or GDPR risk: all sensitive data and operations remain within secure, controlled boundaries, with no external data exposure or unauthorized access. Agents and MCP operate only within the trusted environment, with strict access controls and auditability, so there is no risk of data leakage or non-compliance.
@@ -42,7 +45,7 @@ Bankly is a functional, event-driven banking backend built with modern TypeScrip
 It simulates real-world financial use cases and shows expertise in building scalable, reliable, and testable back-end systems — suitable for fintech companies, startups, and enterprise APIs.
 
 ---
-For a detailed roadmap and workflow, see [PROJECT_STRATEGY.md](./PROJECT_STRATEGY.md).
+For a detailed roadmap and workflow, see [awp.yml](./awp.yml).
 The project follows a modular, scalable structure for maintainability and growth.
 
 ## 2. Key Features

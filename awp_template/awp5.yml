@@ -1,0 +1,70 @@
+# Agentic Workflow Policy Example
+# Michael Wybraniec, ONE-FRONT 2025
+# Contact: michaelwybraniec@me.com
+# This file defines the machine- and human-readable workflow for the project.
+# It ensures all steps, documentation, and code remain in sync, and enables both agents and humans to track, automate, and maintain project quality.
+
+# AWP for DevOps Automation
+# Example: GitHub Actions workflow project
+
+author: Sam Ops
+
+goal: |
+  Automate CI/CD for a Node.js project using GitHub Actions.
+
+overview:
+  - "1. Workflow Setup"
+  - "2. Lint & Test"
+  - "3. Build & Deploy"
+  - "4. Monitor & Improve"
+
+steps:
+  - number: 1
+    name: "Workflow Setup"
+    steps:
+      - number: 1.1
+        description: "Create .github/workflows/ci.yml"
+      - number: 1.2
+        description: "Configure triggers for push and PR"
+  - number: 2
+    name: "Lint & Test"
+    steps:
+      - number: 2.1
+        description: "Add lint and test jobs"
+  - number: 3
+    name: "Build & Deploy"
+    steps:
+      - number: 3.1
+        description: "Add build and deploy steps"
+  - number: 4
+    name: "Monitor & Improve"
+    steps:
+      - number: 4.1
+        description: "Add job for monitoring and reporting"
+
+outcome: |
+  Automated CI/CD pipeline with linting, testing, build, deploy, and monitoring.
+
+commitStandard:
+  format: "type(scope step): subject"
+  types: [feat, fix, docs, test, chore, ci]
+  rules:
+    - Reference the step in every commit.
+    - Use imperative mood.
+  examples:
+    - "ci(workflow 1.1): add initial workflow file"
+    - "feat(ci 2.1): add test job"
+
+procedures:
+  - key: update
+    number: 1
+    name: "update"
+    description: "Review README.md and awp.yml after each step. Update as needed to reflect the current state and next actions."
+  - key: commit
+    number: 2
+    name: "commit"
+    description: "Use the commitStandard for all commit messages. Reference the step in every commit."
+  - key: next
+    number: 3
+    name: "next"
+    description: "After update and commit, proceed to the next main step." 

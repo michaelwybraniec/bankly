@@ -1,0 +1,66 @@
+# Agentic Workflow Policy Example
+# Michael Wybraniec, ONE-FRONT 2025
+# Contact: michaelwybraniec@me.com
+# This file defines the machine- and human-readable workflow for the project.
+# It ensures all steps, documentation, and code remain in sync, and enables both agents and humans to track, automate, and maintain project quality.
+
+# AWP for Simple Node CLI Tool
+# Example: Minimal project
+
+author: Jane Dev
+
+goal: |
+  Build a simple CLI tool in Node.js that prints a greeting.
+
+overview:
+  - "1. Setup"
+  - "2. Implement CLI logic"
+  - "3. Test & Document"
+
+steps:
+  - number: 1
+    name: "Setup"
+    steps:
+      - number: 1.1
+        description: "Initialize project with npm init -y"
+      - number: 1.2
+        description: "Add index.js and package.json scripts"
+  - number: 2
+    name: "Implement CLI logic"
+    steps:
+      - number: 2.1
+        description: "Write greeting logic in index.js"
+  - number: 3
+    name: "Test & Document"
+    steps:
+      - number: 3.1
+        description: "Add a test script"
+      - number: 3.2
+        description: "Write a README.md"
+
+outcome: |
+  A working CLI tool that prints a greeting, with tests and documentation.
+
+commitStandard:
+  format: "type(scope step): subject"
+  types: [feat, fix, docs, test, chore]
+  rules:
+    - Reference the step in every commit.
+    - Use imperative mood.
+  examples:
+    - "feat(cli 2.1): add greeting logic"
+    - "docs(readme 3.2): add usage instructions"
+
+procedures:
+  - key: update
+    number: 1
+    name: "update"
+    description: "Review README.md and awp.yml after each step. Update as needed to reflect the current state and next actions."
+  - key: commit
+    number: 2
+    name: "commit"
+    description: "Use the commitStandard for all commit messages. Reference the step in every commit."
+  - key: next
+    number: 3
+    name: "next"
+    description: "After update and commit, proceed to the next main step." 

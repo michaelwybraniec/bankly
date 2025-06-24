@@ -1,0 +1,72 @@
+# Agentic Workflow Policy Example
+# Michael Wybraniec, ONE-FRONT 2025
+# Contact: michaelwybraniec@me.com
+# This file defines the machine- and human-readable workflow for the project.
+# It ensures all steps, documentation, and code remain in sync, and enables both agents and humans to track, automate, and maintain project quality.
+
+# AWP for Flask REST API
+# Example: Python REST API project
+
+author: Alex Py
+
+goal: |
+  Develop a RESTful API for managing tasks using Flask.
+
+overview:
+  - "1. Setup & Environment"
+  - "2. API Endpoints"
+  - "3. Testing"
+  - "4. Documentation"
+
+steps:
+  - number: 1
+    name: "Setup & Environment"
+    steps:
+      - number: 1.1
+        description: "Create virtualenv and install Flask"
+      - number: 1.2
+        description: "Initialize app.py and requirements.txt"
+  - number: 2
+    name: "API Endpoints"
+    steps:
+      - number: 2.1
+        description: "Implement /tasks GET and POST"
+      - number: 2.2
+        description: "Implement /tasks/<id> PUT and DELETE"
+  - number: 3
+    name: "Testing"
+    steps:
+      - number: 3.1
+        description: "Write unit tests with pytest"
+  - number: 4
+    name: "Documentation"
+    steps:
+      - number: 4.1
+        description: "Write API usage in README.md"
+
+outcome: |
+  A RESTful API for tasks, with endpoints, tests, and documentation.
+
+commitStandard:
+  format: "type(scope step): subject"
+  types: [feat, fix, docs, test, chore]
+  rules:
+    - Reference the step in every commit.
+    - Use imperative mood.
+  examples:
+    - "feat(api 2.1): add GET/POST endpoints"
+    - "test(api 3.1): add unit tests for endpoints"
+
+procedures:
+  - key: update
+    number: 1
+    name: "update"
+    description: "Review README.md and awp.yml after each step. Update as needed to reflect the current state and next actions."
+  - key: commit
+    number: 2
+    name: "commit"
+    description: "Use the commitStandard for all commit messages. Reference the step in every commit."
+  - key: next
+    number: 3
+    name: "next"
+    description: "After update and commit, proceed to the next main step." 
