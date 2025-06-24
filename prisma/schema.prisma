@@ -41,3 +41,14 @@ model Transaction {
   type          String
   reference     String?
 }
+
+model AuditEvent {
+  id             String   @id @default(uuid())
+  fromAccountId  String
+  toAccountId    String
+  amount         Int
+  transactionId  String
+  timestamp      String
+  raw            Json
+  createdAt      DateTime @default(now())
+}
