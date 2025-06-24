@@ -110,6 +110,19 @@ Run the following to install all required dependencies (already listed in packag
 yarn install
 ```
 
+### Project Structure
+- Source code lives in the `src/` directory.
+- The entry point is `src/index.ts`.
+
+### TypeScript Build
+To compile the project:
+
+```sh
+yarn tsc
+```
+
+This will output compiled files to the `dist/` directory.
+
 _Coming soon: setup instructions, environment variables, and local development guide._
 
 ---

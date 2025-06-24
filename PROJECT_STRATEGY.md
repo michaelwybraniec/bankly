@@ -75,12 +75,12 @@ Initialize and develop a production-grade, functional banking backend with best 
    - [x] 1.3 Install dependencies:
      - [x] 1.3.1 `fp-ts`, `io-ts`, `zod`, `graphql`, `@apollo/server`, `graphql-scalars`, `kafkajs`, `pg`, `prisma`, `dotenv`
      - [x] 1.3.2 Dev: `typescript`, `ts-node`, `jest`, `ts-jest`, `eslint`, `prettier`, `tsc-alias`
-   - [ ] 1.4 Add and configure:
-     - [ ] 1.4.1 `tsconfig.json` (strict mode, path aliases)
-     - [ ] 1.4.2 `.eslintrc`, `.prettierrc`
-     - [ ] 1.4.3 `.env`, `.env.example`
-     - [ ] 1.4.4 Initialize Prisma: `npx prisma init`
-     - [ ] 1.4.5 Initialize Jest: `npx ts-jest config:init`
+   - [x] 1.4 Add and configure:
+     - [x] 1.4.1 `tsconfig.json` (strict mode, path aliases)
+     - [x] 1.4.2 `.eslintrc`, `.prettierrc`
+     - [x] 1.4.3 `.env`, `.env.example`
+     - [x] 1.4.4 Initialize Prisma: `npx prisma init`
+     - [x] 1.4.5 Initialize Jest: `npx ts-jest config:init`
    - [ ] 1.5 Create folder structure:
      - [ ] 1.5.1 `src/` (main code)
      - [ ] 1.5.2 `tests/` (unit/integration tests)
@@ -150,11 +150,12 @@ Initialize and develop a production-grade, functional banking backend with best 
 
 ## AWC - Agent Workflow Commands
 
-- **update doc**: Review README.md and PROJECT_STRATEGY.md after each step. For README.md check if it needs update entirely or document new feature. For PROJECT_STRATEGY.md make sure everything is aligned with the context and steps checkboxes match the progress. Update as needed to reflect the current state and next actions.
+- **update docs**: Review README.md and PROJECT_STRATEGY.md after each step. For README.md check if it needs update entirely or document new feature. For PROJECT_STRATEGY.md make sure everything is aligned with the context and steps checkboxes match the progress. Update as needed to reflect the current state and next actions.
 - **commit**: Use the Conventional Commits standard for messages, then commit and push changes to the repository.
+- **next**: Check if the AWC:update doc and AWC:commit is completed, if yes proceed to next main step
 
 _This workflow ensures documentation and code always stay in sync, and project history remains clear and professional._
 
 ---
 
-Happy building !
+Happy building!
