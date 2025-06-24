@@ -133,14 +133,14 @@ steps:
         done: true
   - number: 5
     name: "Kafka Integration"
-    done: false
+    done: true
     steps:
       - number: 5.1
         description: "Setup Kafka producer with KafkaJS"
-        done: false
+        done: true
       - number: 5.2
         description: "Emit MoneyTransferred event after successful transfers"
-        done: false
+        done: true
   - number: 6
     name: "Consumer Service (Audit Logger)"
     done: false
@@ -233,11 +233,11 @@ procedures:
   - key: update
     number: 1
     name: "update"
-    description: "Review README.md and awp.yml after each step. For README.md check if it needs update entirely or document new feature. For awp.yml make sure everything is aligned with the context and steps checkboxes match the progress. Update as needed to reflect the current state and next actions. If you have offered any changes and user accepted, update the relevant section in awp.yml to reflect this."
+    description: "Review README.md and awp.yml after each step. See git status and check what changes were made to the files. For README.md check if it needs update entirely or document new feature. For awp.yml make sure everything is aligned with the context and steps checkboxes match the progress. Update as needed to reflect the current state and next actions. If you have offered any changes and user accepted, update the relevant section in awp.yml to reflect this."
   - key: commit
     number: 2
     name: "commit"
-    description: "Use the Conventional Commits standard we agreed for messages in README.md, Reference the step corresponding in awp.yml in every commit. Then commit and push changes to the repository. Review files you added to make sure commit message is accurate."
+    description: "Check git status, and use the Use the commitStandard we agreed for messages in awp.yml. Reference the step corresponding steps status in awp.yml in every commit. Then commit and push changes to the repository. Review files you added to make sure commit message is accurate."
   - key: next
     number: 3
     name: "next"
@@ -284,3 +284,23 @@ commitStandard:
     - Makes git history easier to read and search
     - Encourages clear, consistent communication
     - Ensures traceability to project strategy steps
+
+version: '3.8'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
