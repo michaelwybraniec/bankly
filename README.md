@@ -9,35 +9,128 @@ Bankly is a self tech testing project, scaled up by strategic acceleration using
 
 > **Note:** The security and GDPR guarantees described above apply when Bankly is deployed in a properly secured production environment. For local development or testing, always use mock or anonymized data and ensure your environment is configured to prevent unauthorized access or data leakage.
 
-```mermaid
-flowchart TD
-    subgraph Trusted_Environment["Trusted Environment (Bankly Infrastructure)"]
-        DB[("PostgreSQL / Data Store")]
-        API["GraphQL API Layer"]
-        Agents["Agents"]
-        MCP["MCP (Multi-Component Platform)"]
-        Security["Security Layer\n(Access Control, Audit, Validation)"]
-        User["User/API Client"]
-        
-        User -->|"Secure Request"| API
-        API -->|"Validated Ops"| Security
-        Security -->|"Permitted Ops"| Agents
-        Security -->|"Permitted Ops"| MCP
-        Agents -->|"Domain Logic"| DB
-        MCP -->|"Domain Logic"| DB
-        Security -.->|"Audit Logs"| DB
-    end
-    
-    External["External World"]
-    External -.->|"No Data Exposure"| Trusted_Environment
-    
-    classDef trusted fill:#e0f7fa,stroke:#00796b,stroke-width:2px;
-    class Trusted_Environment trusted;
-    classDef external fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
-    class External external;
+## Quick Start
+
+### 1. Prerequisites
+- **Node.js 20+** and **npm** (or yarn)
+- **Docker** and **Docker Compose** (for local infra: Postgres, Kafka, Zookeeper, app, audit logger)
+- (Optional) **Make** (for common dev tasks)
+
+### 2. Clone the Repository
+```sh
+git clone https://github.com/michaelwybraniec/bankly.git
+cd bankly
 ```
 
-Built with Node.js, TypeScript, and functional programming principles using fp-ts, Bankly supports secure money transfers between user accounts, tracks transaction history, and publishes domain events via Kafka — all wrapped with robust CI/CD pipelines and comprehensive documentation.
+### 3. Start All Services (Recommended)
+This will launch Postgres, Kafka, Zookeeper, the main app (GraphQL API), and the audit logger (Kafka consumer, health, and metrics endpoints):
+```sh
+docker-compose up --build
+```
+- GraphQL API: [http://localhost:4000/](http://localhost:4000/)
+- Audit Logger Health: [http://localhost:4001/health](http://localhost:4001/health)
+- Audit Logger Metrics: [http://localhost:4002/metrics](http://localhost:4002/metrics)
+- Postgres: `localhost:5432` (user: `bankly`, password: `bankly`, db: `bankly`)
+- Kafka: `localhost:9092`
+
+### 4. Local Development (without Docker)
+If you want to run the app locally (with Docker infra running):
+```sh
+npm install
+npm run build
+npm start
+```
+Or use the Makefile:
+```sh
+make build
+make start
+```
+
+### 5. Database Migrations
+Run Prisma migrations and generate client:
+```sh
+npx prisma migrate dev
+npx prisma generate
+```
+
+### 6. Common Dev Tasks
+- **Lint:** `make lint` or `npm run lint`
+- **Typecheck:** `make typecheck` or `npm run typecheck`
+- **Test (unit/integration):** `make test` or `npm test`
+- **End-to-end test:** `make e2e` or `npx ts-node scripts/test-audit-logger-e2e.ts`
+- **Docs:** See `/docs/` for architecture, API, CI/CD, metrics, and AWP protocol.
+
+## Authentication (Demo JWT)
+
+All GraphQL mutations (except health check) require a valid JWT in the `Authorization` header.
+
+- **Secret (for demo/dev):** `demo_secret_123`
+- **Header format:** `Authorization: Bearer <token>`
+- **Bypassed in test mode (`NODE_ENV=test`)**
+
+### Generate a Demo JWT (valid for 7 days)
+
+You can generate a token using Node.js:
+```js
+node -e "console.log(require('jsonwebtoken').sign({ user: 'demo' }, 'demo_secret_123', { expiresIn: '7d' }))"
+```
+
+Or use an online tool (set secret to `demo_secret_123`).
+
+### Example Usage with curl
+```sh
+TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9... # (your token)
+curl -X POST http://localhost:4000/graphql \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $TOKEN" \
+  -d '{"query":"mutation { createAccount(ownerName: \"Alice\", balance: 1000, currency: \"USD\", status: \"active\") { id ownerName balance } }"}'
+```
+
+If the token is missing or invalid, you will receive a 401 error.
+
+## Monitoring & Metrics
+
+### Prometheus Metrics
+
+Both the main app and audit logger expose Prometheus-compatible metrics endpoints:
+
+- **Main App:** [http://localhost:4000/metrics](http://localhost:4000/metrics)
+- **Audit Logger:** [http://localhost:4002/metrics](http://localhost:4002/metrics)
+
+#### Main App Metrics
+- `graphql_requests_total`: Total number of GraphQL requests
+- `graphql_errors_total`: Total number of GraphQL errors
+- `graphql_response_time_seconds`: Histogram of GraphQL response times
+
+#### Audit Logger Metrics
+- `audit_events_total`: Total number of audit events processed
+- `audit_errors_total`: Total number of errors in audit logger
+
+#### Example Prometheus Scrape Config
+```yaml
+scrape_configs:
+  - job_name: 'bankly-app'
+    static_configs:
+      - targets: ['host.docker.internal:4000']
+  - job_name: 'bankly-audit-logger'
+    static_configs:
+      - targets: ['host.docker.internal:4002']
+```
+
+### Logs
+- **Main App:** `app.log` (rotates, also logs to console)
+- **Audit Logger:** `audit.log` (rotates, also logs to console)
+
+Logs include structured JSON for easy parsing and monitoring.
+
+## Dashboards & Alerting
+
+- Example Prometheus alert rules and Grafana dashboards are provided in [docs/metrics-dashboards.md](docs/metrics-dashboards.md).
+- Includes:
+  - Alerts for high request/error rates and audit logger errors
+  - Grafana panels for key metrics
+  - Slack/email integration with Alertmanager
+- See the docs for setup instructions and ready-to-use config.
 
 ## 1.1 Summary
 Bankly is a functional, event-driven banking backend built with modern TypeScript, designed to demonstrate senior software engineering capabilities — from architecture and validation to event processing and CI/CD automation.

@@ -161,7 +161,7 @@ steps:
         done: true
   - number: 6
     name: "Consumer Service (Audit Logger)"
-    done: false
+    done: true
     steps:
       - number: 6.1
         description: "Build a separate Kafka consumer"
@@ -174,7 +174,7 @@ steps:
         done: true
   - number: 7
     name: "CI/CD Pipeline"
-    done: false
+    done: true
     steps:
       - number: 7.1
         description: "Configure GitHub Actions workflow"
@@ -193,7 +193,7 @@ steps:
         done: true
   - number: 8
     name: "Testing"
-    done: false
+    done: true
     steps:
       - number: 8.1
         description: "Write unit tests for domain logic"
@@ -206,30 +206,30 @@ steps:
         done: true
   - number: 9
     name: "Documentation"
-    done: false
+    done: true
     steps:
       - number: 9.1
         description: "Write/expand README.md (overview, setup, usage)"
-        done: false
+        done: true
       - number: 9.2
         description: "Create /docs/ for:"
-        done: false
+        done: true
         steps:
           - number: 9.2.1
             description: "Architecture"
-            done: false
+            done: true
           - number: 9.2.2
             description: "GraphQL schema"
-            done: false
+            done: true
           - number: 9.2.3
             description: "Kafka event schema"
-            done: false
+            done: true
           - number: 9.2.4
             description: "CI/CD pipeline"
-            done: false
+            done: true
           - number: 9.2.5
             description: "API usage examples"
-            done: false
+            done: true
   - number: 10
     name: "Optional Enhancements"
     done: false
@@ -248,10 +248,10 @@ steps:
         done: false
       - number: 10.5
         description: "Add dashboards and alerting (Prometheus, Grafana, Slack, email)"
-        done: false
+        done: true
   - number: 11
     name: "Project Tooling & Docs"
-    done: false
+    done: true
     steps:
       - number: 11.1
         description: "Create /docs/ directory with architecture, API, CI/CD, metrics, and AWP protocol docs"
