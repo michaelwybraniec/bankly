@@ -296,6 +296,96 @@ yarn tsc
 
 This will output compiled files to the `dist/` directory.
 
+### 5.1 Local Testing User Story
+
+As a developer, you can test the full flow locally as follows:
+
+1. **Install all dependencies**
+   ```sh
+   yarn install
+   ```
+2. **Start required services (PostgreSQL, Kafka, Zookeeper)**
+   ```sh
+   docker compose up -d
+   ```
+3. **Run database migrations**
+   ```sh
+   yarn prisma:migrate
+   ```
+4. **Start the API server**
+   ```sh
+   yarn dev
+   ```
+   - The server will be available at [http://localhost:4000/](http://localhost:4000/).
+5. **Start the Kafka consumer (in a separate terminal)**
+   ```sh
+   yarn ts-node scripts/start-consumer.ts
+   ```
+6. **Create two accounts using the GraphQL Playground**
+   - Go to [http://localhost:4000/](http://localhost:4000/)
+   - Run:
+     ```graphql
+     mutation {
+       createAccount(ownerName: "Alice", balance: 1000, currency: "USD", status: "active") { id }
+     }
+     ```
+     and
+     ```graphql
+     mutation {
+       createAccount(ownerName: "Bob", balance: 1000, currency: "USD", status: "active") { id }
+     }
+     ```
+   - Copy the returned `id` values.
+7. **Transfer money between accounts**
+   - Use the real IDs:
+     ```graphql
+     mutation {
+       transferMoney(
+         fromAccountId: "ID_OF_ALICE"
+         toAccountId: "ID_OF_BOB"
+         amount: 100
+         currency: "USD"
+       ) {
+         transaction { id amount }
+         error
+       }
+     }
+     ```
+8. **See the event in the consumer terminal**
+   - You should see:
+     ```
+     [Kafka] Received event on topic money-transferred:
+     {"fromAccountId":"...","toAccountId":"...","amount":100,...}
+     ```
+
+### Local Testing Flow Diagram
+
+```mermaid
+sequenceDiagram
+  participant Dev as Developer
+  participant Terminal as Terminal
+  participant Docker as Docker Compose
+  participant API as GraphQL API
+  participant DB as PostgreSQL
+  participant Kafka as Kafka
+  participant Consumer as Kafka Consumer
+
+  Dev->>Terminal: yarn install
+  Dev->>Docker: docker compose up -d
+  Dev->>Terminal: yarn prisma:migrate
+  Dev->>API: yarn dev
+  Dev->>Consumer: yarn ts-node scripts/start-consumer.ts
+  Dev->>API: createAccount (GraphQL Playground)
+  API->>DB: Insert Account
+  Dev->>API: createAccount (GraphQL Playground)
+  API->>DB: Insert Account
+  Dev->>API: transferMoney (GraphQL Playground)
+  API->>DB: Update balances, insert Transaction
+  API->>Kafka: Emit MoneyTransferred event
+  Kafka->>Consumer: Deliver event
+  Consumer->>Dev: Log event in terminal
+```
+
 ---
 
 ## 6. Documentation
@@ -344,3 +434,79 @@ type(scope step): subject
 - Ensures traceability to project strategy steps
 
 For more details, see [Conventional Commits](https://www.conventionalcommits.org/).
+
+## 6. Kafka Integration: Emitting and Consuming Events
+
+Bankly emits a `MoneyTransferred` event to Kafka after every successful money transfer. This enables event-driven integrations, audit logging, and more.
+
+### 6.1 Running Kafka Locally
+Kafka and Zookeeper are provided via Docker Compose:
+
+```sh
+docker compose up -d
+```
+
+### 6.2 Event Emission
+After a successful `transferMoney` mutation, an event is published to the `money-transferred` topic. The event payload includes:
+- `fromAccountId`
+- `toAccountId`
+- `amount`
+- `currency`
+- `transactionId`
+- `timestamp`
+
+### 6.3 Consuming Events
+A simple Kafka consumer is provided to log these events:
+
+```sh
+yarn ts-node scripts/start-consumer.ts
+```
+
+You should see output like:
+```
+[Kafka] Received event on topic money-transferred:
+{"fromAccountId":"...","toAccountId":"...","amount":100,...}
+```
+
+### 6.4 Testing the Integration
+1. Start your app (`yarn dev`).
+2. Start the consumer as above.
+3. Perform a `transferMoney` mutation via GraphQL Playground.
+4. Watch the consumer terminal for the event log.
+
+---
+
+## 7. System Architecture Diagram
+
+```mermaid
+flowchart TD
+  subgraph API["GraphQL API (Apollo Server)"]
+    A1["User/Client"]
+    A2["createAccount / transferMoney mutation"]
+  end
+  subgraph DB["PostgreSQL Database"]
+    D1["Account Table"]
+    D2["Transaction Table"]
+  end
+  subgraph Kafka["Kafka Cluster"]
+    K1["money-transferred topic"]
+  end
+  subgraph Consumer["Kafka Consumer"]
+    C1["Audit Logger / Event Processor"]
+  end
+
+  A1 -->|GraphQL Mutation| A2
+  A2 -->|DB Read/Write| D1
+  A2 -->|DB Read/Write| D2
+  A2 -- Event: MoneyTransferred --> K1
+  K1 -- Event --> C1
+
+  style API fill:#e0f7fa,stroke:#00796b,stroke-width:2px
+  style DB fill:#fffde7,stroke:#fbc02d,stroke-width:2px
+  style Kafka fill:#f3e5f5,stroke:#8e24aa,stroke-width:2px
+  style Consumer fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+```
+
+This diagram shows how users interact with the API, how the API reads/writes to the database, emits events to Kafka, and how consumers process those events for further use (e.g., audit logging).
+
+---
