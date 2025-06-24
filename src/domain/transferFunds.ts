@@ -26,7 +26,10 @@ export const TransferFundsInputSchema = z.object({
 
 export function transferFunds(
   input: TransferFundsInput,
-): Either<TransferFundsError, { updatedFrom: Account; updatedTo: Account; transaction: Transaction }> {
+): Either<
+  TransferFundsError,
+  { updatedFrom: Account; updatedTo: Account; transaction: Transaction }
+> {
   // Runtime validation
   const parseResult = TransferFundsInputSchema.safeParse(input);
   if (!parseResult.success) {
@@ -75,4 +78,4 @@ export function transferFunds(
   };
 
   return right({ updatedFrom, updatedTo, transaction });
-} 
+}
