@@ -22,4 +22,4 @@ export const TransactionSchema = z.object({
   status: z.string(),
   type: z.string(),
   reference: z.string().optional(),
-}); 
+});
