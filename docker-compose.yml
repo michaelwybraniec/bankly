@@ -1,9 +1,24 @@
+version: '3.8'
 services:
+  postgres:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: bankly
+      POSTGRES_PASSWORD: bankly
+      POSTGRES_DB: bankly
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
   zookeeper:
     image: confluentinc/cp-zookeeper:7.5.0
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
 
   kafka:
     image: confluentinc/cp-kafka:7.5.0
@@ -15,4 +30,41 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1 
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  app:
+    image: node:20-slim
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: sh -c "npm install && npm run build && npm start"
+    environment:
+      DATABASE_URL: postgres://bankly:bankly@postgres:5432/bankly
+      KAFKA_BROKERS: kafka:9092
+      KAFKA_CLIENT_ID: bankly-api
+      KAFKA_TOPIC_MONEY_TRANSFERRED: money-transferred
+    ports:
+      - "4000:4000"
+    depends_on:
+      - postgres
+      - kafka
+
+  audit-logger:
+    build:
+      context: ./src/audit-consumer
+    environment:
+      DATABASE_URL: postgres://bankly:bankly@postgres:5432/bankly
+      KAFKA_BROKER: kafka:9092
+      KAFKA_GROUP_ID: audit-logger-group
+      KAFKA_TOPIC: money-transferred
+      HEALTH_PORT: 4001
+      METRICS_PORT: 4002
+    ports:
+      - "4001:4001" # Health check
+      - "4002:4002" # Prometheus metrics
+    depends_on:
+      - postgres
+      - kafka
+
+volumes:
+  pgdata: 
