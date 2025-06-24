@@ -88,9 +88,9 @@ Initialize and develop a production-grade, functional banking backend with best 
      - [x] 1.5.4 `config/` (configuration files)
 
 2. 🟠 **Domain Logic**
-   - [ ] 2.1 Model `Account` and `Transaction` types
-   - [ ] 2.2 Implement pure, functional logic for `transferFunds` using fp-ts
-   - [ ] 2.3 Add runtime validation (io-ts or zod)
+   - [x] 2.1 Model `Account` and `Transaction` types
+   - [x] 2.2 Implement pure, functional logic for `transferFunds` using fp-ts
+   - [x] 2.3 Add runtime validation (io-ts or zod)
 
 3. 🔵 **Database (PostgreSQL + Prisma)**
    - [ ] 3.1 Define Prisma schema for accounts and transactions:
@@ -156,6 +156,7 @@ Initialize and develop a production-grade, functional banking backend with best 
 - **update**: Review README.md and PROJECT_STRATEGY.md after each step. For README.md check if it needs update entirely or document new feature. For PROJECT_STRATEGY.md make sure everything is aligned with the context and steps checkboxes match the progress. Update as needed to reflect the current state and next actions. If you have offered any changes and user accepted, update the relevant section in PROJECT_STRATEGY.md to reflect this.
 - **commit**: Use the Conventional Commits standard we agreed for messages in README.md, Reference the step corresponding in PROJECT_STRATEGY.md in every commit. Then commit and push changes to the repository. Review files you added to make sure commit message is accurate.
 - **next**: Check if the AWC:update doc and AWC:commit is completed, if yes proceed to next main step. Don't forget that you can evaluate steps and propose. Also if you see any critical points please mention it before continue. If User accept your proposition, update docs accordingly.
+- **check** Check where are we in Checklist, if anything is missing, forgotten or overlooked.
 
 _This workflow ensures documentation and code always stay in sync, and project history remains clear and professional._
 

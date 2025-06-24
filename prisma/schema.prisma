@@ -4,6 +4,8 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+// Prisma schema for Bankly
+
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -12,4 +14,30 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model Account {
+  id         String        @id @default(uuid())
+  ownerName  String
+  balance    Int
+  currency   String?
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  status     String?
+  sentTransactions     Transaction[] @relation("FromAccount")
+  receivedTransactions Transaction[] @relation("ToAccount")
+}
+
+model Transaction {
+  id            String   @id @default(uuid())
+  fromAccount   Account  @relation("FromAccount", fields: [fromAccountId], references: [id])
+  fromAccountId String
+  toAccount     Account  @relation("ToAccount", fields: [toAccountId], references: [id])
+  toAccountId   String
+  amount        Int
+  currency      String?
+  createdAt     DateTime @default(now())
+  status        String
+  type          String
+  reference     String?
 }
