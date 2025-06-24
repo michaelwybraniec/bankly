@@ -18,4 +18,4 @@ export const AccountSchema = z.object({
   createdAt: z.date(),
   updatedAt: z.date(),
   status: z.string().optional(),
-}); 
+});

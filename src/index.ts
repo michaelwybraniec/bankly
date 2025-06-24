@@ -5,6 +5,7 @@ import { TaskEither, tryCatch } from 'fp-ts/TaskEither';
 import { transferFunds } from './domain/transferFunds';
 import { transferFundsPrisma } from './adapters/accountPersistence';
 import { PrismaClient } from '@prisma/client';
+import { connectProducer, sendMoneyTransferredEvent } from './adapters/kafkaProducer';
 
 const prisma = new PrismaClient();
 
@@ -70,6 +71,20 @@ const resolvers = {
       // Use persistence adapter for DB update
       try {
         const transaction = await transferFundsPrisma(fromAccountId, toAccountId, amount, currency);
+        // Emit MoneyTransferred event to Kafka
+        try {
+          await sendMoneyTransferredEvent({
+            fromAccountId,
+            toAccountId,
+            amount,
+            currency,
+            transactionId: transaction.id,
+            timestamp: new Date().toISOString(),
+          });
+          console.log('[Kafka] MoneyTransferred event sent!');
+        } catch (kafkaErr) {
+          console.error('[Kafka] Failed to send MoneyTransferred event:', kafkaErr);
+        }
         return { transaction, error: null };
       } catch (err: any) {
         return { transaction: null, error: err.message };
@@ -99,6 +114,7 @@ async function main() {
     context: async () => ({ prisma }),
   });
   console.log(`🚀 Apollo Server ready at ${url}`);
+  await connectProducer();
 }
 
 main().catch((err) => {
