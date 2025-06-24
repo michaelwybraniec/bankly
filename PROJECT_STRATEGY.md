@@ -81,11 +81,11 @@ Initialize and develop a production-grade, functional banking backend with best 
      - [x] 1.4.3 `.env`, `.env.example`
      - [x] 1.4.4 Initialize Prisma: `npx prisma init`
      - [x] 1.4.5 Initialize Jest: `npx ts-jest config:init`
-   - [ ] 1.5 Create folder structure:
-     - [ ] 1.5.1 `src/` (main code)
-     - [ ] 1.5.2 `tests/` (unit/integration tests)
-     - [ ] 1.5.3 `prisma/` (Prisma schema/migrations)
-     - [ ] 1.5.4 `config/` (configuration files)
+   - [x] 1.5 Create folder structure:
+     - [x] 1.5.1 `src/` (main code)
+     - [x] 1.5.2 `tests/` (unit/integration tests)
+     - [x] 1.5.3 `prisma/` (Prisma schema/migrations)
+     - [x] 1.5.4 `config/` (configuration files)
 
 2. 🟠 **Domain Logic**
    - [ ] 2.1 Model `Account` and `Transaction` types
@@ -148,11 +148,11 @@ Initialize and develop a production-grade, functional banking backend with best 
 
 ---
 
-## AWC - Agent Workflow Commands
+## AWP - Agentic Workflow Procedures
 
-- **update docs**: Review README.md and PROJECT_STRATEGY.md after each step. For README.md check if it needs update entirely or document new feature. For PROJECT_STRATEGY.md make sure everything is aligned with the context and steps checkboxes match the progress. Update as needed to reflect the current state and next actions.
+- **update docs**: Review README.md and PROJECT_STRATEGY.md after each step. For README.md check if it needs update entirely or document new feature. For PROJECT_STRATEGY.md make sure everything is aligned with the context and steps checkboxes match the progress. Update as needed to reflect the current state and next actions. If you have offered any changes and user accepted, update the relevant section in PROJECT_STRATEGY.md to reflect this.
 - **commit**: Use the Conventional Commits standard for messages, then commit and push changes to the repository.
-- **next**: Check if the AWC:update doc and AWC:commit is completed, if yes proceed to next main step
+- **next**: Check if the AWC:update doc and AWC:commit is completed, if yes proceed to next main step. Don't forget that you can evaluate steps and propose. Also if you see any critical points please mention it before continue. If User accept your proposition, update docs accordingly.
 
 _This workflow ensures documentation and code always stay in sync, and project history remains clear and professional._
 

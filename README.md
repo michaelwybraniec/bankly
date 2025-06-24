@@ -42,6 +42,8 @@ Bankly is a functional, event-driven banking backend built with modern TypeScrip
 It simulates real-world financial use cases and shows expertise in building scalable, reliable, and testable back-end systems — suitable for fintech companies, startups, and enterprise APIs.
 
 ---
+For a detailed roadmap and workflow, see [PROJECT_STRATEGY.md](./PROJECT_STRATEGY.md).
+The project follows a modular, scalable structure for maintainability and growth.
 
 ## Key Features
 
@@ -113,56 +115,10 @@ yarn install
 ### Project Structure
 - Source code lives in the `src/` directory.
 - The entry point is `src/index.ts`.
+- Tests are placed in the `tests/` directory.
+- Configuration files (non-env) go in the `config/` directory.
 
 ### TypeScript Build
 To compile the project:
 
-```sh
-yarn tsc
 ```
-
-This will output compiled files to the `dist/` directory.
-
-_Coming soon: setup instructions, environment variables, and local development guide._
-
----
-
-## 📚 Documentation
-- Full API schema, event contracts, and architectural diagrams will be provided as the project evolves.
-
----
-
-## 🤝 Contributing
-This project is a technical showcase and not open for external contributions at this time.
-
----
-
-## 📝 License
-MIT 
-
----
-
-## 📝 Commit Message Standard
-
-This project uses the **Conventional Commits** standard for commit messages. This helps automate changelogs, releases, and improves clarity in project history.
-
-**Format:**
-```
-type(scope?): subject
-```
-- `type`: chore, feat, fix, docs, refactor, test, ci, build, etc.
-- `scope`: (optional) area of codebase affected
-- `subject`: short description (imperative, lower case)
-
-**Examples:**
-- `feat(api): add money transfer mutation`
-- `fix(domain): correct balance calculation`
-- `chore: update dependencies`
-- `docs: add architecture diagram to README`
-
-**Why?**
-- Enables automated changelogs and semantic releases
-- Makes git history easier to read and search
-- Encourages clear, consistent communication
-
-For more details, see [Conventional Commits](https://www.conventionalcommits.org/). 
