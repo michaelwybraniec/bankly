@@ -11,7 +11,7 @@ export async function transferFundsPrisma(
   fromAccountId: string,
   toAccountId: string,
   amount: number,
-  currency?: string
+  currency?: string,
 ) {
   return await prisma.$transaction(async (tx: any) => {
     const from = await tx.account.findUnique({ where: { id: fromAccountId } });
@@ -49,5 +49,9 @@ export async function transferFundsPrisma(
 }
 
 // Example usage:
-type Account = typeof prisma.account extends { findUnique: (args: any) => Promise<infer T> } ? T : never;
-type Transaction = typeof prisma.transaction extends { create: (args: any) => Promise<infer T> } ? T : never; 
+type Account = typeof prisma.account extends { findUnique: (args: any) => Promise<infer T> }
+  ? T
+  : never;
+type Transaction = typeof prisma.transaction extends { create: (args: any) => Promise<infer T> }
+  ? T
+  : never;
