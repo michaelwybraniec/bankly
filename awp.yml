@@ -117,20 +117,20 @@ steps:
         done: true
   - number: 4
     name: "GraphQL API"
-    done: false
+    done: true
     steps:
       - number: 4.1
         description: "Setup Apollo Server"
-        done: false
+        done: true
       - number: 4.2
         description: "Add mutation: transferMoney(from, to, amount)"
-        done: false
+        done: true
       - number: 4.3
         description: "Use functional resolver pipelines (TaskEither, pipe)"
-        done: false
+        done: true
       - number: 4.4
         description: "Expose GraphQL Playground for API exploration"
-        done: false
+        done: true
   - number: 5
     name: "Kafka Integration"
     done: false

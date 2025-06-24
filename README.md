@@ -62,7 +62,73 @@ The project follows a modular, scalable structure for maintainability and growth
 | 📚 Documentation    | Full API schema, architectural overview, and event contracts            |
 | 🛡️ Security Focus   | Immutable domain objects, strict type validation, no unsafe casting     |
 
+## 5. Using the GraphQL API: Creating Accounts and Transferring Money
+
+You can interact with Bankly's API using the built-in GraphQL Playground at [http://localhost:4000/](http://localhost:4000/).
+
+### 5.1 Create Accounts
+Use the following mutation to create an account:
+
+```graphql
+mutation {
+  createAccount(ownerName: "Alice", balance: 1000, currency: "USD", status: "active") {
+    id
+    ownerName
+    balance
+    currency
+    status
+  }
+}
+```
+Repeat for a second account (e.g., "Bob").
+
+### 5.2 Get Account IDs
+- The mutation response will include the new account's `id`.
+- You can also view all accounts and their IDs using Prisma Studio:
+  ```sh
+  yarn prisma studio
+  ```
+
+### 5.3 Transfer Money
+Use the real account IDs in the following mutation:
+
+```graphql
+mutation {
+  transferMoney(
+    fromAccountId: "REAL_ID_1"
+    toAccountId: "REAL_ID_2"
+    amount: 100
+    currency: "USD"
+  ) {
+    transaction {
+      id
+      fromAccountId
+      toAccountId
+      amount
+      currency
+      createdAt
+      status
+      type
+    }
+    error
+  }
+}
+```
+
+### 5.4 Error Handling
+- If you use invalid IDs, insufficient balance, or mismatched currencies, the API will return a helpful error message.
+
+### 5.5 Health Check
+Test the server with:
+```graphql
+query {
+  _health
+}
+```
+
 ---
+
+For more advanced usage, see the rest of this README and the schema in `src/index.ts`.
 
 ## 3. Technologies Used
 - **Language:** Node.js + TypeScript
